@@ -1,0 +1,17 @@
+.image {
+  margin: 20px 8px;
+  height: 400px;
+}
+
+.card {
+  margin: auto;
+  border: none;
+}
+
+.cardBody {
+  border: none;
+  padding: 50px;
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+/*# sourceMappingURL=home.module.css.map */
