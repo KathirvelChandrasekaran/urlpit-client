@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect, useRef } from "react";
 import {
   NavLink,
   Modal,
@@ -10,6 +10,7 @@ import {
   Button,
 } from "shards-react";
 
+
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -18,7 +19,18 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../redux/actions/userAction";
 
-const Signin = ({ loginUser, loading }) => {
+const Signin = ({ loginUser, loading, UI }) => {
+  const [errors, setErrors] = useState({});
+  const prevProp = useRef(UI);
+
+  useEffect(() => {
+    if (prevProp) {
+      prevProp.current = UI.error;
+    }
+    setErrors(prevProp.current);
+    console.log(errors);
+  }, [UI.error]);
+
   const [openSignin, setopenSignin] = useState(false);
 
   const toggleButtonSignin = () => {
@@ -99,10 +111,11 @@ const Signin = ({ loginUser, loading }) => {
                 Signin
               </Button>
             </FormGroup>
+
             {loading ? (
-              <div class="d-flex justify-content-center">
-                <div class="spinner-border text-success" role="status">
-                  <span class="sr-only">Loading...</span>
+              <div className="d-flex justify-content-center">
+                <div className="spinner-border text-success" role="status">
+                  <span className="sr-only">Loading...</span>
                 </div>
               </div>
             ) : (
@@ -119,11 +132,13 @@ Signin.propTypes = {
   loginUser: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
+  error: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   user: state.user,
   loading: state.UI.loading,
+  UI: state.UI,
 });
 
 export default connect(mapStateToProps, { loginUser })(Signin);
