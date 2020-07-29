@@ -41,7 +41,7 @@ const NavbarApp = ({ user }) => {
   const profileFragment = !user.authenticated ? (
     <Fragment>
       <NavItem>
-        {/* <Signin></Signin> */}
+        <Signin></Signin>
       </NavItem>
       <NavItem>
         <Signup></Signup>
@@ -54,7 +54,7 @@ const NavbarApp = ({ user }) => {
           <Col>
             <img
               src={user.imageUrl}
-              style={{ height: 30, width: 30 }}
+              style={{ height: 30, width: 30, borderRadius: '50%' }}
               alt="User Image"
               id="userImage"
             />

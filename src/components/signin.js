@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect, useRef } from "react";
+import React, { useState, Fragment } from "react";
 import {
   NavLink,
   Modal,
@@ -10,7 +10,6 @@ import {
   Button,
 } from "shards-react";
 
-
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -18,19 +17,9 @@ import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 import { loginUser } from "../redux/actions/userAction";
+import ResetPassword from "./resetPassword";
 
 const Signin = ({ loginUser, loading, UI }) => {
-  const [errors, setErrors] = useState({});
-  const prevProp = useRef(UI);
-
-  useEffect(() => {
-    if (prevProp) {
-      prevProp.current = UI.error;
-    }
-    setErrors(prevProp.current);
-    console.log(errors);
-  }, [UI.error]);
-
   const [openSignin, setopenSignin] = useState(false);
 
   const toggleButtonSignin = () => {
@@ -62,7 +51,7 @@ const Signin = ({ loginUser, loading, UI }) => {
   return (
     <Fragment>
       <NavLink
-        style={{ cursor: "context-menu", marginRight: 30 }}
+        style={{ marginRight: 30 }}
         onClick={toggleButtonSignin}
       >
         Signin
@@ -111,7 +100,28 @@ const Signin = ({ loginUser, loading, UI }) => {
                 Signin
               </Button>
             </FormGroup>
-
+            <div className="d-flex justify-content-center">
+              <span
+                style={{
+                  margin: "10px",
+                  color: "#29c474",
+                  textAlign: "center",
+                }}
+              >
+                <ResetPassword></ResetPassword>
+              </span>
+            </div>
+            {UI.error ? (
+              <div className="d-flex justify-content-center">
+                <span
+                  style={{ margin: "10px", color: "red", textAlign: "center" }}
+                >
+                  {UI.error.emailError || UI.error.errors}
+                </span>
+              </div>
+            ) : (
+              ""
+            )}
             {loading ? (
               <div className="d-flex justify-content-center">
                 <div className="spinner-border text-success" role="status">
@@ -132,7 +142,7 @@ Signin.propTypes = {
   loginUser: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
-  error: PropTypes.array.isRequired,
+  UI: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

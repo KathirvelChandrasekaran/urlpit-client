@@ -30,9 +30,6 @@ export const loginUser = (userData) => (dispatch) => {
   axios
     .post("/signin", userData)
     .then((res) => {
-      console.log(userData);
-      console.log(res.data);
-      // setAuthHeader(res.data.token);
       const fireToken = `Bearer ${res.data.token}`;
       axios.defaults.headers.common["Authorization"] = fireToken;
       localStorage.setItem("Firetoken", fireToken);
@@ -47,7 +44,29 @@ export const loginUser = (userData) => (dispatch) => {
       console.log(err);
       dispatch({
         type: SET_ERRORS,
-        payload: err.response,
+        payload: err.response.data,
+      });
+    });
+};
+
+export const resetPassword = (email) => (dispatch) => {
+  dispatch({
+    type: LOADING_UI,
+  });
+  axios
+    .post("/resetPassword", email)
+    .then((res) => {
+      dispatch({
+        type: CLEAR_ERRORS,
+        payload: res.data.message,
+      });
+      console.log(res.data.message);
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data,
       });
     });
 };
