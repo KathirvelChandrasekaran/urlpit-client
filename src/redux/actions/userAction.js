@@ -49,6 +49,32 @@ export const loginUser = (userData) => (dispatch) => {
     });
 };
 
+export const signupUser = (userdata) => (dispatch) => {
+  dispatch({
+    type: LOADING_UI,
+  });
+  axios
+    .post("/signup", userdata)
+    .then((res) => {
+      const fireToken = `Bearer ${res.data.token}`;
+      axios.defaults.headers.common["Authorization"] = fireToken;
+      localStorage.setItem("Firetoken", fireToken);
+      localStorage.setItem("UserId", res.data.userId);
+      dispatch(GetUserData(res.data.userId));
+      dispatch({
+        type: CLEAR_ERRORS,
+      });
+      window.location.reload();
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data,
+      });
+    });
+};
+
 export const resetPassword = (email) => (dispatch) => {
   dispatch({
     type: LOADING_UI,
@@ -60,6 +86,28 @@ export const resetPassword = (email) => (dispatch) => {
         type: CLEAR_ERRORS,
         payload: res.data.message,
       });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data,
+      });
+    });
+};
+
+export const verifyEmail = () => (dispatch) => {
+  dispatch({
+    type: LOADING_UI,
+  });
+  axios
+    .post("/signin/verify")
+    .then((res) => {
+      dispatch({
+        type: CLEAR_ERRORS,
+        payload: res.data.message,
+      });
+      console.log(res.data.message);
     })
     .catch((err) => {
       console.log(err);
