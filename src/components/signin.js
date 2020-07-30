@@ -10,6 +10,7 @@ import {
   Button,
 } from "shards-react";
 
+
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -17,7 +18,6 @@ import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 import { loginUser } from "../redux/actions/userAction";
-import ResetPassword from "./resetPassword";
 
 const Signin = ({ loginUser, loading, UI }) => {
   const [openSignin, setopenSignin] = useState(false);
@@ -50,10 +50,7 @@ const Signin = ({ loginUser, loading, UI }) => {
 
   return (
     <Fragment>
-      <NavLink
-        style={{ marginRight: 30 }}
-        onClick={toggleButtonSignin}
-      >
+      <NavLink style={{ marginRight: 30 }} onClick={toggleButtonSignin}>
         Signin
       </NavLink>
       <Modal open={openSignin} toggle={toggleButtonSignin}>
@@ -100,17 +97,6 @@ const Signin = ({ loginUser, loading, UI }) => {
                 Signin
               </Button>
             </FormGroup>
-            <div className="d-flex justify-content-center">
-              <span
-                style={{
-                  margin: "10px",
-                  color: "#29c474",
-                  textAlign: "center",
-                }}
-              >
-                <ResetPassword></ResetPassword>
-              </span>
-            </div>
             {UI.error ? (
               <div className="d-flex justify-content-center">
                 <span

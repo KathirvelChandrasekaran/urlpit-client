@@ -17,7 +17,7 @@ import { connect } from "react-redux";
 import { resetPassword } from "../redux/actions/userAction";
 
 const ResetPassword = ({ resetPassword, UI }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const toggle = () => {
     setOpen(!open);
@@ -47,7 +47,7 @@ const ResetPassword = ({ resetPassword, UI }) => {
       <Modal open={open} toggle={toggle}>
         <ModalHeader>Reset your password</ModalHeader>
         <ModalBody style={{ textAlign: "center" }}>
-          <Form>
+          <Form onSubmit={formik.handleSubmit}>
             <FormGroup>
               <FormInput
                 type="email"

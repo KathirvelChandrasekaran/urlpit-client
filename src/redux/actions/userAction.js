@@ -60,7 +60,6 @@ export const resetPassword = (email) => (dispatch) => {
         type: CLEAR_ERRORS,
         payload: res.data.message,
       });
-      console.log(res.data.message);
     })
     .catch((err) => {
       console.log(err);

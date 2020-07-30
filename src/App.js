@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import history from "./utils/history";
 import AuthRoute from "./utils/authRoute";
 
 import jwtDecode from "jwt-decode";
@@ -12,6 +11,7 @@ import jwtDecode from "jwt-decode";
 import Navbar from "./components/navbar";
 import Home from "./components/defHome";
 import UserHome from "./components/userHome";
+import ReserPassword from "./components/resetPassword";
 
 import { Provider } from "react-redux";
 import store from "./redux/store";
@@ -41,12 +41,14 @@ function App() {
   return (
     <Provider store={store}>
       <div>
-        <Router history={history}>
+        <Router>
           <Navbar></Navbar>
           <Switch>
+            <Route path="/resetPassword" component={ReserPassword}></Route>
+
             <AuthRoute path="/userHome" component={UserHome}></AuthRoute>
             <Route>{token ? <UserHome /> : <Home />}</Route>
-          </Switch> 
+          </Switch>
         </Router>
       </div>
     </Provider>
